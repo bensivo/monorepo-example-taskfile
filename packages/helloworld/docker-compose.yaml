@@ -1,0 +1,12 @@
+version: '3.4'
+
+services:
+  helloworld-app:
+    image: helloworld-app
+    ports:
+      - 8080:80
+
+  helloworld-api:
+    image: helloworld-api
+    ports:
+      - 3000:3000

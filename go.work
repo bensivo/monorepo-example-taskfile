@@ -1,0 +1,4 @@
+go 1.22.1
+
+use ./packages/helloworld-api
+use ./packages/helloworld-core

@@ -1,0 +1,12 @@
+version: '3'
+
+includes:
+  helloworld: 
+    taskfile: packages/helloworld/Taskfile.yml
+    dir: packages/helloworld
+  helloworld-api: 
+    taskfile: packages/helloworld-api/Taskfile.yml
+    dir: packages/helloworld-api
+  helloworld-app: 
+    taskfile: packages/helloworld-app/Taskfile.yml
+    dir: packages/helloworld-app

@@ -1,0 +1,24 @@
+version: '3'
+
+includes:
+  helloworld-api: 
+    taskfile: ../helloworld-api/Taskfile.yml
+    dir: ../helloworld-api
+    internal: true
+  helloworld-app: 
+    taskfile: ../helloworld-app/Taskfile.yml
+    dir: ../helloworld-app
+    internal: true
+
+tasks:
+  run:
+    deps: 
+      - helloworld-api:docker
+      - helloworld-app:docker
+    cmds:
+      - docker-compose up
+
+  dev:
+    dir: ../..
+    cmds:
+      - mprocs "task helloworld-api:dev" "task helloworld-app:dev"

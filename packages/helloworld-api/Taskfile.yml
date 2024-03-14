@@ -1,0 +1,26 @@
+version: '3'
+
+tasks:
+  dev:
+    cmds:
+      - air
+
+  build:
+    cmds:
+      - env GOOS=linux GOARCH=arm64 go build -o dist/helloworld-api ./main.go
+
+  docker:
+    cmds:
+      - task: build
+      - docker build -t helloworld-api .
+      
+  run:
+    cmds:
+      - task: docker
+      - docker run -p 3000:3000 helloworld-api
+
+  test:
+    cmds:
+      - curl -s -X GET http://localhost:3000/greetings/alice | jq
+      - curl -s -X GET http://localhost:3000/greetings/bob | jq
+      - curl -s -X GET http://localhost:3000/greetings/charlie | jq
