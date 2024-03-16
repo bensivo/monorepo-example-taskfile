@@ -31,6 +31,7 @@ func main() {
 		})
 	})
 
+	fmt.Println("Starting HTTP server on localhost:3000")
 	err := http.ListenAndServe("localhost:3000", mux)
 	if err != nil {
 		fmt.Printf("Error starting http server: %v\n", err)

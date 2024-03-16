@@ -6,6 +6,11 @@ tasks:
       - npm run dev
 
   build:
+    sources:
+      - ./**/*
+      - exclude: ./dist/**/*
+    generates:
+      - ./dist/**/*
     cmds:
       - npm run build
 

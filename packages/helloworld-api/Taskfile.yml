@@ -1,4 +1,10 @@
-version: '3'
+version: 3
+
+includes:
+  helloworld-core: 
+    taskfile: ../helloworld-core/Taskfile.yml
+    dir: ../helloworld-core
+    internal: true
 
 tasks:
   dev:
@@ -6,10 +12,21 @@ tasks:
       - air
 
   build:
+    sources:
+      - ./**/*
+      - exclude: ./dist/**/*
+    generates:
+      - ./dist/**/*
     cmds:
+      - task: helloworld-core:build
       - env GOOS=linux GOARCH=arm64 go build -o dist/helloworld-api ./main.go
 
   docker:
+    sources:
+      - ./**/*
+      - exclude: ./dist/**/*
+    generates:
+      - ./dist/**/*
     cmds:
       - task: build
       - docker build -t helloworld-api .
@@ -18,9 +35,3 @@ tasks:
     cmds:
       - task: docker
       - docker run -p 3000:3000 helloworld-api
-
-  test:
-    cmds:
-      - curl -s -X GET http://localhost:3000/greetings/alice | jq
-      - curl -s -X GET http://localhost:3000/greetings/bob | jq
-      - curl -s -X GET http://localhost:3000/greetings/charlie | jq
