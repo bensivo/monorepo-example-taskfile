@@ -1,0 +1,14 @@
+version: 3
+
+includes:
+  helloworld-proto: 
+    taskfile: ../helloworld-proto/Taskfile.yml
+    dir: ../helloworld-proto
+    internal: true
+
+tasks:
+  build:
+    cmds:
+      - task: helloworld-proto:build
+      - rm -rf ./proto
+      - buf generate ../helloworld-proto --template ./buf.gen.yaml

@@ -1,9 +1,9 @@
 version: 3
 
 includes:
-  helloworld-core: 
-    taskfile: ../helloworld-core/Taskfile.yml
-    dir: ../helloworld-core
+  helloworld-proto-go: 
+    taskfile: ../helloworld-proto-go/Taskfile.yml
+    dir: ../helloworld-proto-go
     internal: true
 
 tasks:
@@ -18,7 +18,7 @@ tasks:
     generates:
       - ./dist/**/*
     cmds:
-      - task: helloworld-core:build
+      - task: helloworld-proto-go:build
       - env GOOS=linux GOARCH=arm64 go build -o dist/helloworld-api ./main.go
 
   docker:

@@ -3,10 +3,12 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"helloworld-core/pkg/greetings"
+	greetingsv1 "helloworld-proto-go/proto/greetings/v1"
+	"io"
 	"net/http"
-	"strings"
 	"time"
+
+	"google.golang.org/protobuf/proto"
 )
 
 func main() {
@@ -14,21 +16,46 @@ func main() {
 
 	// Return CORS for all options requests
 	mux.HandleFunc("OPTIONS /", func(w http.ResponseWriter, r *http.Request) {
+		fmt.Println("Options")
 		LogRequest(r)
 		Cors(w, r)
 
 		w.WriteHeader(http.StatusOK)
 	})
 
-	mux.HandleFunc("GET /greetings/{name}", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("POST /greet", func(w http.ResponseWriter, r *http.Request) {
 		LogRequest(r)
 		Cors(w, r)
 
-		name := r.PathValue("name")
-		WriteJson(w, map[string]any{
-			// "greeting": greetings.Greet(name),
-			"greeting": strings.ToUpper(greetings.Greet(name)),
-		})
+		bytes, err := io.ReadAll(r.Body)
+		if err != nil {
+			WriteJson(w, map[string]any{
+				"error": fmt.Errorf("failed to read request body: %w", err),
+			})
+		}
+
+		// Parse GreetRequest from http request body
+		var greetRequest greetingsv1.GreetRequest
+		err = proto.Unmarshal(bytes, &greetRequest)
+		if err != nil {
+			WriteJson(w, map[string]any{
+				"error": fmt.Errorf("failed to unmarshal GreetRequest: %w", err),
+			})
+		}
+
+		// Create GreetResponse
+		greetResponse := greetingsv1.GreetResponse{
+			Greeting: fmt.Sprintf("Hello, %s!!\n", greetRequest.Name),
+		}
+
+		// Write GreetResponse to http response body
+		bytes, err = proto.Marshal(&greetResponse)
+		if err != nil {
+			WriteJson(w, map[string]any{
+				"error": fmt.Errorf("failed to marshal GreetResponse: %w", err),
+			})
+		}
+		w.Write(bytes)
 	})
 
 	fmt.Println("Starting HTTP server on localhost:3000")

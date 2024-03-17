@@ -10,3 +10,12 @@ includes:
   helloworld-app: 
     taskfile: packages/helloworld-app/Taskfile.yml
     dir: packages/helloworld-app
+  helloworld-proto: 
+    taskfile: packages/helloworld-proto/Taskfile.yml
+    dir: packages/helloworld-proto
+  helloworld-proto-go: 
+    taskfile: packages/helloworld-proto-go/Taskfile.yml
+    dir: packages/helloworld-proto-go
+  helloworld-proto-ts: 
+    taskfile: packages/helloworld-proto-ts/Taskfile.yml
+    dir: packages/helloworld-proto-ts

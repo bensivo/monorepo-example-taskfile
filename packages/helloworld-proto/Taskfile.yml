@@ -1,0 +1,6 @@
+version: 3
+
+tasks:
+  build:
+    cmds:
+      - buf build ./proto -o buf-image.bin

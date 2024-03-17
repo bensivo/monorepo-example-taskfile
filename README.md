@@ -1,20 +1,21 @@
 # Monorepo Example - Taskfile
 
 Packages:
-- helloworld-core: 
-  - A Golang lib package
-  - Contains importable functions, like `Greet(name)`
-- helloworld-api: 
-  - Golang HTTP API, 
-  - Imports helloworld-core
-  - Exposes `GET /greetings/{name}` 
-- helloworld-app: 
-  - Typescript Vite + React web app, calls helloworld-api
-  - Served in an NGINX docker container
-  - Calls the helloworld-api endpoint on user form submission
 - helloworld: 
   - docker-compose package
   - Runs helloworld-api and helloworld-app in a single command
+- helloworld-api: 
+  - Golang HTTP API, 
+  - Exposes `POST /greet` 
+- helloworld-app: 
+  - Typescript Vite + React web app, calls the `POST /greet` endpoint
+- helloworld-proto: 
+  - Protobuf type definitions (GreetRequest, GreetResponse)
+  - Uses buf.build to compile protos 
+- helloworld-proto-go: 
+  - Generates golang code for helloworld-proto types
+- helloworld-proto-ts: 
+  - Generates ts code for helloworld-proto types
 
 
 Commands:
