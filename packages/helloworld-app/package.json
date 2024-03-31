@@ -10,7 +10,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "helloworld-proto-ts": "file:../helloworld-proto-ts",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },

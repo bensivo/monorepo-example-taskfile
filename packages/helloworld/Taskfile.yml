@@ -17,3 +17,8 @@ tasks:
       - helloworld-app:docker
     cmds:
       - docker-compose up
+
+  dev:
+    dir: ../..
+    cmds:
+      - mprocs "task helloworld-api:dev" "task helloworld-app:dev"

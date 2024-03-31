@@ -1,1 +1,0 @@
-export * from './proto/greetings/v1/greetings_pb';

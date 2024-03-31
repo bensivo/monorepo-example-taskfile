@@ -1,11 +1,5 @@
 version: '3'
 
-includes:
-  helloworld-proto-ts: 
-    taskfile: ../helloworld-proto-ts/Taskfile.yml
-    dir: ../helloworld-proto-ts
-    internal: true
-
 tasks:
   dev:
     cmds:
@@ -18,15 +12,9 @@ tasks:
     generates:
       - ./dist/**/*
     cmds:
-      - task: helloworld-proto-ts:build
       - npm run build
 
   docker:
-    sources:
-      - ./**/*
-      - exclude: ./dist/**/*
-    generates:
-      - ./dist/**/*
     cmds:
       - task: build
       - docker build -t helloworld-app .
